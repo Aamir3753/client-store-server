@@ -8,6 +8,7 @@ var logger = require("morgan");
 var cors = require("cors");
 var mailSender = require("./mailSender");
 var appRouter = require("./routes/appsRouter");
+var {pushNotificationRouter,sendNotification} = require("./routes/pushNotificationRouter")
 
 
 // Db connection
@@ -37,6 +38,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/apps",appRouter);
+app.use("/subscribe",pushNotificationRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,9 +5,9 @@ var Users = require("../models/user");
 var authenticate = require("../authenticate");
 
 router.post("/signup", (req, res, next) => {
-  const { email, password, gender, name } = req.body;
+  const { email, password, gender, name,address,contact } = req.body;
   Users.register(
-    new Users({ username: email, name, gender, role: "Sales_Man" }),
+    new Users({ username: email, name, gender, role: "Sales_Man",address,contact }),
     password,
     (err, user) => {
       if (err) return next(err);

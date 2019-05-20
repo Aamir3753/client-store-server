@@ -1,5 +1,5 @@
 module.exports = {
-  dbUrl: "mongodb://localhost:27017/client-store",
+  dbUrl: "mongodb+srv://aamir:123456abcdef@quizdb-alt6o.mongodb.net/client-store",
   secret: "abcdefgh123456",
   google:{
     type:"oauth2",
