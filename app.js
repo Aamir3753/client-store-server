@@ -6,10 +6,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-var mailSender = require("./mailSender");
-var appRouter = require("./routes/appsRouter");
-var {pushNotificationRouter,sendNotification} = require("./routes/pushNotificationRouter")
-
 
 // Db connection
 mongoose.connect(config.dbUrl, { useNewUrlParser: true }, err => {
@@ -17,16 +13,16 @@ mongoose.connect(config.dbUrl, { useNewUrlParser: true }, err => {
   console.log("DB connected");
 });
 
-
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var studentRouter = require("./routes/students");
+var verifyToken = require("./routes/verifyToken");
 
 var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -37,8 +33,8 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/apps",appRouter);
-app.use("/subscribe",pushNotificationRouter)
+app.use("/students", studentRouter);
+app.use("/verifyToken", verifyToken);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,12 +44,13 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.json(err)
+  res.json(err);
 });
 
 module.exports = app;
